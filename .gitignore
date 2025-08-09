@@ -6,4 +6,4 @@ venv
 
 # generated files
 *.mp3
-
+debug-*
