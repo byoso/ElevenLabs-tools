@@ -3,7 +3,11 @@
 .env
 .venv
 venv
+dialogues.cfg
+save-dialogues.cfg
+scenario-tmp/
 
 # generated files
 *.mp3
 debug-*
+__pycache__/

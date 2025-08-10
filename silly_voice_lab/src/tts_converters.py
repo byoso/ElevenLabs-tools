@@ -6,7 +6,7 @@ import pyttsx3
 from pydub import AudioSegment
 import requests
 
-from . import settings
+from .helpers import SETTINGS
 
 
 
@@ -27,13 +27,10 @@ def debug_voice_converter(char, title, text, file_path):
     sound = AudioSegment.from_wav(wav_path)
     sound.export(mp3_path, format="mp3")
 
-    # delete the wav file    if os.path.exists(wav_filename):
-    os.remove(wav_path)
+    # delete the wav file
+    if os.path.exists(wav_path):
+        os.remove(wav_path)
     print(f"Deleted temporary file: {wav_path}")
-
-
-
-
 
 
 def debug_text_converter(file_path, title, text):
@@ -49,7 +46,7 @@ def eleven_labs_converter(char, title, text, file_path):
     response = requests.post(
         f"https://api.elevenlabs.io/v1/text-to-speech/{char.voice_id}?output_format=mp3_44100_128",
     headers={
-        "xi-api-key": f"{settings.ELEVENLABS_API_KEY}"
+        "xi-api-key": f"{SETTINGS.elevenlabs_api_key}"
     },
     json={
         "text": text,
