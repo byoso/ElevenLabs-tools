@@ -1,6 +1,6 @@
-# elevenlab tools
+# silly-voice-lab
 
-It should remain a very simple to use project.
+A simple tool to create voiced dialogues with **ElevenLabs** for your projects.
 
 ## How it works
 
