@@ -1,14 +1,17 @@
 #! /usr/bin/env python3
 
+
 import os
 from pathlib import Path
 from pprint import pprint
 
+import pyttsx3
 import yaml
+
 
 from src import settings
 from src.models import Character, Group
-from src.tts_converters import debug_text_converter, eleven_labs_converter
+from src.tts_converters import debug_text_converter, debug_voice_converter, eleven_labs_converter
 
 
 BASE_DIR = os.getcwd()
@@ -50,7 +53,7 @@ def convert_text_to_speech(char, title, text, file_path):
         case "prod":
             eleven_labs_converter(char, title, text, file_path)
         case "dev":
-            print("not implemented yet")
+            debug_voice_converter(char, title, text, file_path)
 
 
 def get_scripts(group: Group):
@@ -73,13 +76,23 @@ def get_scripts(group: Group):
                         convert_text_to_speech(char, dialogue['title'], dialogue['text'], voice_folder_path)
 
 
-
-def main():
+def start_process():
     groups = get_groups()
     for group in groups:
         dpprint(group)
         get_scripts(group)
 
+
+def pyttsx_infos():
+    engine = pyttsx3.init()
+    voices = engine.getProperty('voices')
+    for i, voice in enumerate(voices):
+        print(f"{i}: {voice.name} ({voice.gender if hasattr(voice, 'gender') else 'unknown'})")
+
+
+def main():
+    start_process()
+    # pyttsx_infos()
     print("Done !")
 
 
