@@ -3,7 +3,6 @@
 .env
 .venv
 venv
-dialogues.cfg
 save-dialogues.cfg
 scenario-tmp/
 
