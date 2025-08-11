@@ -6,7 +6,6 @@ class Character:
     name: str = "name"
     voice_id: str = "voice_id"
     gender: str = "m"
-    ignore: bool = False
 
     def __post_init__(self) -> None:
         if self.gender not in ("m", "f"):
@@ -17,7 +16,6 @@ class Character:
 class Group:
     name: str | None = None
     folder: str | None = None
-    ignore: bool= False
     characters: list[Character] = field(default_factory=list)
 
     def __len__(self) -> int:

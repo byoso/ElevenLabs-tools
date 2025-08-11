@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 import os
+from pathlib import Path
 from dataclasses import dataclass
 from pprint import pprint
 import configparser
@@ -8,43 +9,55 @@ import configparser
 BASE_DIR = os.getcwd()
 
 @dataclass
-class Settings:
+class Configuration:
     input_folder: str = "scenario"
     output_folder: str = "voices"
     debug: bool = True
     converter: str = "dev"
     elevenlabs_api_key: str = "no_key"
+    female_voice_id: str = "default"
+    male_voice_id: str = "default"
 
 
-def get_config():
-    if not os.path.exists(BASE_DIR + "/dialogues.cfg"):
-        return Settings()
-    print(BASE_DIR + "/dialogues.cfg")
-    config = configparser.ConfigParser()
-    config.read(BASE_DIR + "/dialogues.cfg")
+def get_config(file_name: str="dialogues.cfg") -> Configuration:
+    config_file = Path(Path(BASE_DIR), Path(file_name))
+    print(config_file)
+    if not os.path.exists(Path(config_file)):
+        print("No config file found, initialize a project first with the command 'init'")
+        exit(0)
+        return Configuration()
+    print(f"Config file '{file_name}' loading...")
+    try:
+        config = configparser.ConfigParser()
+        config.read(config_file)
 
-    output_folder = config["folders"]["output_folder"]
-    input_folder = config["folders"]["input_folder"]
-    elevenlabs_api_key = config["secrets"]["elevenlabs_api_key"]
-    debug = config["app"]["debug"] == "1"
-    converter = config["app"]["converter"]
-
-    settings = Settings(
-        output_folder=output_folder,
-        input_folder=input_folder,
-        elevenlabs_api_key=elevenlabs_api_key,
-        debug=debug,
-        converter=converter
-    )
-    return settings
-
-SETTINGS = get_config()
+        output_folder = config["folders"]["output_folder"]
+        input_folder = config["folders"]["input_folder"]
+        elevenlabs_api_key = config["secrets"]["elevenlabs_api_key"]
+        debug = config["app"]["debug"] == "1"
+        converter = config["app"]["converter"]
+        female_voice_id = config["dev"]["female_voice_id"]
+        male_voice_id = config["dev"]["male_voice_id"]
 
 
-def dprint(*args, **kwargs):
-    if SETTINGS.debug:
+        configuration = Configuration(
+            output_folder=output_folder,
+            input_folder=input_folder,
+            elevenlabs_api_key=elevenlabs_api_key,
+            debug=debug,
+            converter=converter,
+            female_voice_id=female_voice_id,
+            male_voice_id=male_voice_id,
+        )
+    except Exception as e:
+        print(f"Error reading the config file: {e}")
+        exit(0)
+    return configuration
+
+def dprint(CONF: Configuration, *args, **kwargs):
+    if CONF.debug:
         print(*args, **kwargs)
 
-def dpprint(*args, **kwargs):
-    if SETTINGS.debug:
+def dpprint(CONF: Configuration, *args, **kwargs):
+    if CONF.debug:
         pprint(*args, **kwargs)

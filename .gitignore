@@ -4,6 +4,7 @@
 .venv
 venv
 save-dialogues.cfg
+vfa-*
 scenario-tmp/
 
 # generated files
