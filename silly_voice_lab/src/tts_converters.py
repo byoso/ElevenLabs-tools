@@ -50,6 +50,10 @@ def debug_text_converter(CONFIG: Configuration, title: str, text:str, file_path:
 
 
 def eleven_labs_converter(CONFIG: Configuration, char: Character, title: str, text:str, path:Path) -> None:
+    file_path = Path(path) / f"{title}.mp3"
+    if os.path.exists(Path(file_path)):
+        dprint(CONFIG, f"skiped {title}")
+        return
     response = requests.post(
         f"https://api.elevenlabs.io/v1/text-to-speech/{char.voice_id}?output_format=mp3_44100_128",
     headers={
@@ -63,10 +67,6 @@ def eleven_labs_converter(CONFIG: Configuration, char: Character, title: str, te
     if response.status_code != 200:
         dprint(CONFIG, f"Something when wrong with {char.name}")
 
-    file_path = Path(path) / f"{title}.mp3"
-    if os.path.exists(Path(file_path)):
-        dprint(CONFIG, f"skiped {title}")
-        return
     file_path.parent.mkdir(parents=True, exist_ok=True)
     # Save MP3
     with open(file_path, "wb") as f:

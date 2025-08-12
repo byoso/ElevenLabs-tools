@@ -14,7 +14,7 @@ from silly_voice_lab.src.helpers import dprint, dpprint, get_config, Configurati
 from silly_voice_lab.src.models import Character, Group
 from silly_voice_lab.src.tts_converters import debug_text_converter, debug_voice_converter, eleven_labs_converter
 
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 BASE_DIR = os.getcwd()
 
 
