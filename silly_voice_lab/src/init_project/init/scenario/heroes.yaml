@@ -1,7 +1,6 @@
 
 
-- name: heroes
-  folder: heroes
+- group: heroes
   characters:
   - name: John  # James
     voice_id: EkK5I93UQWFDigLMpZcX

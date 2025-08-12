@@ -41,7 +41,7 @@ def debug_voice_converter(CONFIG: Configuration, char: Character, title: str, te
 def debug_text_converter(CONFIG: Configuration, title: str, text:str, file_path: Path) -> None:
     """Save txt files simulating a real call to ElevenLabs"""
     file_path = Path(file_path) / f"{title}.txt"
-    if os.path.exists(Path(file_path)):
+    if Path(file_path).exists():
         dprint(CONFIG, f"skiped {title}")
         return
     file_path.parent.mkdir(parents=True, exist_ok=True)
@@ -51,7 +51,7 @@ def debug_text_converter(CONFIG: Configuration, title: str, text:str, file_path:
 
 def eleven_labs_converter(CONFIG: Configuration, char: Character, title: str, text:str, path:Path) -> None:
     file_path = Path(path) / f"{title}.mp3"
-    if os.path.exists(Path(file_path)):
+    if Path(file_path).exists():
         dprint(CONFIG, f"skiped {title}")
         return
     response = requests.post(

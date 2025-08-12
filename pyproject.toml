@@ -23,7 +23,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "silly-voice-lab"
-version = "0.1.1"
+version = "0.2.2"
 description = "Dialogues voice generator using ElevenLabs (AI)"
 readme = "README.md"
 license = "MIT"
@@ -57,11 +57,16 @@ packages = [
     "silly_voice_lab",
     "silly_voice_lab.src",
     "silly_voice_lab.src.init_project",
-    "silly_voice_lab.src.init_project.scenario",
-    "silly_voice_lab.src.init_project.scenario.heroes",
-    "silly_voice_lab.src.init_project.scenario.heroes.Sarah",
-    "silly_voice_lab.src.init_project.scenario.heroes.John",
+    "silly_voice_lab.src.init_project.init",
+    "silly_voice_lab.src.init_project.expert",
+    "silly_voice_lab.src.init_project.init.scenario",
+    "silly_voice_lab.src.init_project.expert.scenario",
+    "silly_voice_lab.src.init_project.expert.configs",
+    "silly_voice_lab.src.init_project.init.scenario.heroes",
+    "silly_voice_lab.src.init_project.init.scenario.heroes",
+    "silly_voice_lab.src.init_project.init.scenario.heroes.Sarah",
+    "silly_voice_lab.src.init_project.init.scenario.heroes.John",
     ]
 
 [tool.setuptools.package-data]
-"*" = ['*.cfg', '*.yaml']
+"*" = ["*.cfg", "*.yaml", "Makefile"]

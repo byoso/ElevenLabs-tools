@@ -14,9 +14,22 @@ class Character:
 
 @dataclass
 class Group:
-    name: str | None = None
-    folder: str | None = None
+    group: str = ""
     characters: list[Character] = field(default_factory=list)
 
     def __len__(self) -> int:
         return len(self.characters)
+    def __post_init__(self) -> None:
+        if self.group is None:
+            self.group = ""
+
+
+@dataclass
+class Configuration:
+    input_folder: str = "scenario"
+    output_folder: str = "voices"
+    debug: bool = True
+    converter: str = "dev"
+    elevenlabs_api_key: str = "no_key"
+    female_voice_id: str = "default"
+    male_voice_id: str = "default"

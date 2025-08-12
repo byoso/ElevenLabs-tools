@@ -47,8 +47,7 @@ Directly inside a scenario folder (or whatever you named it), you must have at l
 
 **group_example.yaml**
 ```yaml
-- name: heroes      # name of the group
-  folder: heroes    # folder in wich you must place the character's folders
+- group: heroes      # name of the group
   characters:
   - name: John      # name of a character's folder
     voice_id: EkK5I93UQWFDigLMpZcX # the ElevenLab ID of the voice for the 'prod' mode (optionnal)

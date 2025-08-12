@@ -2,26 +2,28 @@
 
 import os
 from pathlib import Path
-from dataclasses import dataclass
 from pprint import pprint
 import configparser
 
+import yaml
+
+from silly_voice_lab.src.models import  Configuration, Group, Character
+
 BASE_DIR = os.getcwd()
 
-@dataclass
-class Configuration:
-    input_folder: str = "scenario"
-    output_folder: str = "voices"
-    debug: bool = True
-    converter: str = "dev"
-    elevenlabs_api_key: str = "no_key"
-    female_voice_id: str = "default"
-    male_voice_id: str = "default"
+
+
+def dprint(CONF: Configuration, *args, **kwargs) -> None:
+    if CONF.debug:
+        print(*args, **kwargs)
+
+def dpprint(CONF: Configuration, *args, **kwargs) -> None:
+    if CONF.debug:
+        pprint(*args, **kwargs)
 
 
 def get_config(file_name: str="dialogues.cfg") -> Configuration:
     config_file = Path(Path(BASE_DIR), Path(file_name))
-    print(config_file)
     if not os.path.exists(Path(config_file)):
         print("No config file found, initialize a project first with the command 'init'")
         exit(0)
@@ -54,10 +56,16 @@ def get_config(file_name: str="dialogues.cfg") -> Configuration:
         exit(0)
     return configuration
 
-def dprint(CONF: Configuration, *args, **kwargs):
-    if CONF.debug:
-        print(*args, **kwargs)
+def get_groups(CONFIG) -> list[Group]:
+    groups = []
+    folder_path = Path(Path(BASE_DIR), Path(CONFIG.input_folder))
+    for file in folder_path.glob("*.yaml"):
+        dprint(CONFIG, f"\nReading {file.name} ...")
 
-def dpprint(CONF: Configuration, *args, **kwargs):
-    if CONF.debug:
-        pprint(*args, **kwargs)
+        with open(Path(Path(folder_path), Path(file.name)), "r", encoding="utf-8") as f:
+            casting = yaml.safe_load(f)
+            for group in casting:
+                grp = Group(**group)
+                grp.characters = [Character(**char) for char in grp.characters]
+                groups.append(grp)
+    return groups

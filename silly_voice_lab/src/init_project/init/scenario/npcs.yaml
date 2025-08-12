@@ -1,7 +1,6 @@
 
 
-- name: vilains
-  folder: npcs
+- group: vilains
   characters:
   - name: Blondie  # Blondie
     voice_id: exsUS4vynmxd379XN4yO
@@ -11,8 +10,7 @@
     voice_id: B8gJV1IhpuegLxdpXFOE
     gender: m
 
-- name: npcs
-  folder: npcs
+- group: npcs
   characters:
     - name: guard_m
       voice_id: voice_id
