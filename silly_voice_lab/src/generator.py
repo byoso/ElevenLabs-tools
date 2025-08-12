@@ -35,6 +35,9 @@ def generate(CONFIG:Configuration, BASE_DIR:str) -> None:
                 CHAR_DIR.mkdir()
             data = CHAR_FILE_DATA
             data["category"] = "base_" + char.name
+            if Path(CHAR_DIR, f"{char.name}.yaml").exists():
+                dprint(CONFIG, f"Skipping: file {char.name}.yaml already exists.")
+                continue
             with open(Path(CHAR_DIR, f"{char.name}.yaml"), "w") as f:
                 f.write(f"# {char.name} base lines\n\n")
                 yaml.dump([data], f, allow_unicode=True, sort_keys=False)

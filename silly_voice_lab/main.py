@@ -15,7 +15,7 @@ from silly_voice_lab.src.helpers import dprint, dpprint, get_config, get_groups,
 from silly_voice_lab.src.models import Character, Group
 from silly_voice_lab.src.tts_converters import debug_text_converter, debug_voice_converter, eleven_labs_converter
 
-VERSION = "0.2.2"
+VERSION = "0.2.3"
 BASE_DIR = os.getcwd()
 INIT_PROJECT_INIT = "/src/init_project/init/"
 INIT_PROJECT_EXPERT = "/src/init_project/expert/"

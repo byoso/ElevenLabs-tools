@@ -23,7 +23,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "silly-voice-lab"
-version = "0.2.2"
+version = "0.2.3"
 description = "Dialogues voice generator using ElevenLabs (AI)"
 readme = "README.md"
 license = "MIT"
@@ -40,7 +40,7 @@ classifiers=[
 ]
 dependencies = [
     "pydub>=0.25.1,<1.0.0",
-    "pyttsx3==2.99",
+    "pyttsx3>=2.99,<3.0.0",
     "PyYAML>=6.0.2,<7.0.0",
     "requests>=2.32.4,<3.0.0",
 ]
