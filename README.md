@@ -9,7 +9,7 @@ then: `pip install silly_voice_lab`
 
 - run `silly-voice-lab` to know the commands
 - run `silly-voice-lab init` to get a starter pack.
-- Now that you have a `silly_voice_lab.cfg` file, configure it to feet your needs:
+- Now that you have a `silly_voice_lab.cfg` file in your working folder, configure it to fit your needs:
 
 **silly_voice_lab.cfg**
 ```sh
@@ -45,6 +45,7 @@ male_voice_id=en+m3
 
 Directly inside a scenario folder (or whatever you named it), you must have at least one yaml files looking like this:
 
+**group_example.yaml**
 ```yaml
 - name: heroes      # name of the group
   folder: heroes    # folder in wich you must place the character's folders
@@ -78,6 +79,7 @@ scenario/
 
 No matter how a dialogue file is named, it must look like that.
 
+**some_dialogues.yaml**
 ```yaml
 - category: "actions" # when precessed, will create a subfolder with that name
   dialogues:
@@ -91,19 +93,19 @@ No matter how a dialogue file is named, it must look like that.
     text: "Ouch !"
 ```
 
-You can add as much categories and dilogues as long as you respect this structure.
+You can add as much categories and dialogues as long as you respect this structure.
 
 
 ## about the converters
 - text: does not create real audio files, just text placeholders, usefull to test
-- dev: use a local rough speech-to-text, usefull to prototype a project with real voices (but crappy voices !)
+- dev: use a local rough speech-to-text, usefull to prototype a project with real voices (but robot-like as hell !)
 - prod: uses elevenlabs api to create the voices, you need a valid ElevenLab api key to do that.
 
-**Important**: with the aim of saving your ElevenLabs credits, the processing of the voices will automatically skeep the already existing files, so, if you want to replace an already existing file, delete it manually before re-processing. If you add new dialogue lines, only the new ones will be processed.
+**Important**: aiming to save your precious ElevenLabs credits, the processing of the voices will automatically skeep the already existing files, so, if you want to replace an already existing file, delete it manually before re-processing. If you add new dialogue lines, only the new ones will be processed.
 
 
 # Suggested workflow with ElevenLabs (tip for broke devs 😉 )
 
-Create 2 different .cfg files (one converter=dev and one converter=prod), each one pointing on a different outpout folder (let's say "voices-prod" and "voices-dev").
+Create 2 different .cfg files (one converter=dev and one converter=prod), each one pointing to a different outpout folder (let's say "voices-prod" and "voices-dev").
 
-Start your project with the dev voices, and as soon as your EL credits are high enough to create new 'prod' voices, process the prod cfg file (remember it will only process the missing mp3 files), and replace the dev voices in your project by the prod ones.
+Start your project with the dev voices, and as soon as your EL credits are high enough to create new 'prod' voices, process the prod cfg file (remember it will only process the missing mp3 files), and then replace the dev voices in your project by the prod ones.
