@@ -9,5 +9,6 @@ scenario-tmp/
 
 # generated files
 *.mp3
+*.txt
 debug-*
 __pycache__/
