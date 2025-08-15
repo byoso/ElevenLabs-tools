@@ -12,22 +12,22 @@ import shutil
 
 from silly_voice_lab.src.generator import generate
 from silly_voice_lab.src.api import create_sample, get_catalogue
-from silly_voice_lab.src.helpers import dprint, dpprint, get_config, get_groups, Configuration
-from silly_voice_lab.src.models import Character, Group
+from silly_voice_lab.src.helpers import dprint, dpprint, get_config, get_groups, SillyVoiceLabError
+from silly_voice_lab.src.models import Character, Configuration, Group
 from silly_voice_lab.src.silly_engine import print_title, c
 from silly_voice_lab.src.tts_converters import process_voice
 
-VERSION = "0.2.4"
+VERSION = "0.2.5"
 BASE_DIR = os.getcwd()
 INIT_PROJECT_INIT = "/src/init_project/init/"
 INIT_PROJECT_EXPERT = "/src/init_project/expert/"
 
 
-def get_scripts(CONFIG: Configuration, group: Group):
+def get_scripts(CONFIG: Configuration, group: Group) -> None:
+    errors = []
     group_folder_path = Path(Path(BASE_DIR), Path(CONFIG.input_folder), Path(group.group))
     dprint(CONFIG, group_folder_path)
     for char in group.characters :
-        dprint(CONFIG, f"\n# {char.name} is working on the scenario...")
         folder_path = Path(group_folder_path, Path(char.name))
         for file in folder_path.glob("*.yaml"):
             dprint(CONFIG, f"\nReading {file.name} ...")
@@ -40,15 +40,29 @@ def get_scripts(CONFIG: Configuration, group: Group):
                     voice_folder_path = Path(Path(BASE_DIR), Path(CONFIG.output_folder), Path(group.group), Path(char.name), Path(category))
                     for dialogue in scene['dialogues']:
                         dprint(CONFIG, f"- {dialogue['title']}")
-                        process_voice(CONFIG, char, dialogue['title'], dialogue['text'], voice_folder_path)
+                        try:
+                            process_voice(CONFIG, char, dialogue['title'], dialogue['text'], voice_folder_path)
+                        except SillyVoiceLabError as e:
+                            errors.append(char.name)
+                            print(e)
+    if errors:
+        message = f"{c.danger}Errors: {len(errors)}\n{errors}{c.end}"
+        raise SillyVoiceLabError(message)
+
 
 
 def start_process(file_name: str="dialogues.cfg") -> None:
     CONFIG = get_config(file_name)
     groups = get_groups(CONFIG)
+    errors = 0
     for group in groups:
-        dpprint(CONFIG, group)
-        get_scripts(CONFIG, group)
+        try:
+            get_scripts(CONFIG, group)
+        except SillyVoiceLabError as e:
+            errors += 1
+            print(e)
+    if errors > 0:
+        raise SillyVoiceLabError(f"{c.danger}Errors occured, read the logs to know more.{c.end}")
 
 def pyttsx_infos() -> None:
     engine = pyttsx3.init()
@@ -82,7 +96,10 @@ def cmd() -> None:
             get_init_files(INIT_PROJECT_INIT)
     elif len(sys.argv) == 3 and sys.argv[1] == "run":
         file_name = sys.argv[2]
-        start_process(file_name)
+        try:
+            start_process(file_name)
+        except SillyVoiceLabError as e:
+            print(e)
         print(f"{c.success}Done !{c.end}")
     elif len(sys.argv) == 3 and sys.argv[1] == "gen":
         file_name = sys.argv[2]

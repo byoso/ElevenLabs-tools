@@ -84,7 +84,7 @@ def eleven_labs_converter(CONFIG: Configuration, char: Character, title: str, te
     },
     )
     if response.status_code != 200:
-        dprint(CONFIG, f"Something when wrong with {char.name}")
+        raise SillyVoiceLabError(f"{c.danger}Something when wrong with {char.name}. (still have Eleven Labs credits ?){c.end}")
 
     file_path.parent.mkdir(parents=True, exist_ok=True)
     # Save MP3

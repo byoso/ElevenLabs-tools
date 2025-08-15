@@ -23,7 +23,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "silly-voice-lab"
-version = "0.2.4"
+version = "0.2.5"
 description = "Dialogues voice generator using ElevenLabs (AI)"
 readme = "README.md"
 license = "MIT"

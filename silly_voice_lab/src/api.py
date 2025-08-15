@@ -107,7 +107,7 @@ def create_sample(CONFIG: Configuration) -> None:
     if errors:
         print(f"{c.danger}Aborted samples (known pydub error): {len(errors)}{c.end}")
         print(f"{c.danger}{errors}{c.end}")
-        print("Workaround: redo the command a few times until no error remains (do not remove the already created files, just redo the command)")
+        print("[dev mode only]: if in dev mode, redo the command a few times until no error remains (do not remove the already created files, just redo the command)")
     else:
         print(f"{c.success}no errors{c.end}")
     print(f"{c.success}Samples done !{c.end}")
