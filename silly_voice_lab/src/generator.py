@@ -8,17 +8,14 @@ from silly_voice_lab.src.helpers import dprint, dpprint, get_groups
 CHAR_FILE_DATA = {
             "category": "",
             "dialogues": [
-                {"title": "hello", "text": "Hello !"},
+                {"title": "Yes", "text": "Yes !"},
+                {"title": "No", "text": "No !"},
             ]
         }
 
 
-
 def generate(CONFIG:Configuration, BASE_DIR:str) -> None:
-    # dprint(CONFIG, BASE_DIR)
-    # dpprint(CONFIG, CONFIG)
     ROOT_DIR = Path(BASE_DIR, CONFIG.input_folder)
-    # print(ROOT_DIR)
     groups = get_groups(CONFIG)
     for group in groups:
         print(group)

@@ -11,6 +11,8 @@ from silly_voice_lab.src.models import  Configuration, Group, Character
 
 BASE_DIR = os.getcwd()
 
+class SillyVoiceLabError(Exception):
+    pass
 
 
 def dprint(CONF: Configuration, *args, **kwargs) -> None:
@@ -35,7 +37,8 @@ def get_config(file_name: str="dialogues.cfg") -> Configuration:
 
         output_folder = config["folders"]["output_folder"]
         input_folder = config["folders"]["input_folder"]
-        elevenlabs_api_key = config["secrets"]["elevenlabs_api_key"]
+        elevenlabs_api_key = config["elevenlabs"]["api_key"]
+        catalogue_size = config["elevenlabs"]["catalogue_size"]
         debug = config["app"]["debug"] == "1"
         converter = config["app"]["converter"]
         female_voice_id = config["dev"]["female_voice_id"]
@@ -46,6 +49,7 @@ def get_config(file_name: str="dialogues.cfg") -> Configuration:
             output_folder=output_folder,
             input_folder=input_folder,
             elevenlabs_api_key=elevenlabs_api_key,
+            catalogue_size=int(catalogue_size),
             debug=debug,
             converter=converter,
             female_voice_id=female_voice_id,
@@ -57,6 +61,7 @@ def get_config(file_name: str="dialogues.cfg") -> Configuration:
     return configuration
 
 def get_groups(CONFIG) -> list[Group]:
+    """Get all the groups of the scenario"""
     groups = []
     folder_path = Path(Path(BASE_DIR), Path(CONFIG.input_folder))
     for file in folder_path.glob("*.yaml"):

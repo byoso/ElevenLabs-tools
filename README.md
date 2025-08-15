@@ -13,9 +13,10 @@ then: `pip install silly_voice_lab`
 
 **silly_voice_lab.cfg**
 ```sh
-[secrets]
+[elevenlabs]
 # enter your own ElevenLab api key here if you have one
-elevenlabs_api_key=your_own_key
+api_key=your_own_key
+catalogue_size=100  # max size of your voices catalogue
 
 [folders]
 input_folder=scenario
@@ -108,3 +109,7 @@ You can add as much categories and dialogues as long as you respect this structu
 Create 2 different .cfg files (one converter=dev and one converter=prod), each one pointing to a different outpout folder (let's say "voices-prod" and "voices-dev").
 
 Start your project with the dev voices, and as soon as your EL credits are high enough to create new 'prod' voices, process the prod cfg file (remember it will only process the missing mp3 files), and then replace the dev voices in your project by the prod ones.
+
+# Knonw issues
+
+- 'sample' in dev mode: an error in the lib pydub can make it fail, just redo the command until it's ok.

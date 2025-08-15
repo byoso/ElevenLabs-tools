@@ -3,8 +3,11 @@
 .env
 .venv
 venv
+# dev files
+/.local_dev/
 save-dialogues.cfg
 vfa-*
+.vfa-*
 scenario-tmp/
 
 # generated files
@@ -12,3 +15,10 @@ scenario-tmp/
 *.txt
 debug-*
 __pycache__/
+catalogue.yaml
+_catalogue.yaml
+dist/
+silly_voice_lab.egg-info/
+/scenario/
+/voices/
+silly_voice_lab.cfg
